@@ -27,7 +27,7 @@ import {
 
 import axios from 'axios';
 const  API_KEY  =  "c65d00b4aec24e1bb37e9ae9dd81d8cd";
-const  URL  =  `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${API_KEY}`;
+const  URL  =  'http://127.0.0.1:8000/article/list';
 
 const fetchArticles = () => {
 
@@ -36,7 +36,7 @@ const fetchArticles = () => {
     method: 'get'
   }).then(response => {
 
-    console.log(response);
+    console.log("qzd");
     return response.data;
   })
 };
@@ -62,15 +62,15 @@ const HomePage: React.FunctionComponent = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent color="primary" >
-        <IonList color="primary">
+        <IonList >
 
           {
             articles.map(a => {
 
               return (
                 <IonItem>
-                  {a['title']}
-                  <IonButton href={a['url']} color="primary" slot="end">Read</IonButton>
+                  {a['nom']}
+                  <IonButton slot="end">Read</IonButton>
                 </IonItem>
               );
             })
