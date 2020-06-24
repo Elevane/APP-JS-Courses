@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {FormBuilder, Form} from '@angular/forms';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +8,16 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+
+
+  registrationForm = this.formBuilder.group({
+    name: [''],
+    quantity: [''],
+    unity: [''],
+    user: ['']
+  });
+  constructor(private formBuilder: FormBuilder) {
+
+  }
 
 }
