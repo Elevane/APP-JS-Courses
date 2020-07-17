@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="primary">
+      Courses
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  
+<ion-content fullscreen>
+
+  <ion-list>
+    
+    <ion-item ><ion-button block>Fin des courses</ion-button></ion-item>
+    <ion-item  *ngFor="let item of res">
+      
+      <ion-label>
+        <h2 style="text-transform: capitalize; font-weight: 500;">{{item.name}}</h2>
+        <h4 style="opacity: 0.5;">{{item.quantity}}  {{item.unity}}</h4>
+      </ion-label>
+      <ion-button  icon-only color ="{{item.color}}"(click)="clickEvent(item)">
+        <ion-icon *ngIf="item.color=='primary'"name="close"></ion-icon>
+        <ion-icon *ngIf="item.color=='light'"name="checkmark" color="primary"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    </ion-list>
+    </ion-content>
+
+
+  
+
+
+
+
+
+
+
+
