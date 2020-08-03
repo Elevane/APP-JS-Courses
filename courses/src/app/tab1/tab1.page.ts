@@ -140,7 +140,7 @@ export class Tab1Page {
     deleteRes(array){
       for(let i of array){
         this.ressourceService.delete(i['id']);
-        
+        console.log(i);
       }
      
     }

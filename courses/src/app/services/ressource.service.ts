@@ -17,6 +17,14 @@ export class RessourceService {
     "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
    })
   };
+
+  // Http Options
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
+
   constructor(private http: HttpClient, private loadingCtrl: LoadingController) { 
 
     
@@ -32,8 +40,9 @@ export class RessourceService {
     });
      await loading.present();
     if(id){
-      this.http.delete(this.url+ "objet/"+id).subscribe(res => {
-        console.log('deleting : ' + id + "=> "+ res);
+      console.log(typeof id);
+      this.http.delete(this.url+ "objet/"+id,  this.httpHeader).subscribe(res => {
+        console.log('deleting : ' + parseInt(id) + "=> "+ res);
       }, err => {
         console.log(err);
         loading.dismiss();
@@ -42,6 +51,8 @@ export class RessourceService {
     }
     
   }
+
+  
 
 }
 
