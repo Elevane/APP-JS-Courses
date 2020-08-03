@@ -1,31 +1,56 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 2
+    <ion-title class="ion-text-center">
+    Ajouter une course
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
+<ion-content fullscreen>
+<form [formGroup]="form" (ngSubmit)="logForm(form)">
   
-
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <ion-item>
-    <ion-select   formControlName="super"(ionChange)="onUnityChange()">
-      <ion-item>
-      <ion-select-option *ngFor="let unity of unities" [value]="unity">
-          {{unity}}
-          <ion-iterm>
-        <ion-select>
-          <ion-select-option *ngFor="let subunity of AllsubUnities[unity]" [value]="subunity">{{subunity}}</ion-select-option>
-        </ion-select>
-      </ion-iterm>
-      </ion-select-option>
-    </ion-item>
-    </ion-select>
+    <ion-label floating bold>Nom</ion-label>
+    <ion-input [formControl]="form.controls['name']"
+        type="text"></ion-input>
   </ion-item>
 
-</form>
+  <ion-item>
+    <ion-label floating bold>Quantité</ion-label>
+    <ion-input [formControl]="form.controls['quantity']"
+        type="number"></ion-input>
+  </ion-item>
+<ion-item>
+  <ion-label>Unity</ion-label>
+</ion-item>
+  <ion-item>
+    <ion-label>Unity</ion-label>
+    <ion-segment (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="liquid">
+        <ion-icon name="beaker-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="mass">
+        <ion-icon name="fast-food-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="entities">
+        <ion-icon name="pie-chart-outline"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item>
+    <ion-item class="selectUnity" *ngIf="unity.length > 0">
+    <ion-input class="center" [formControl]="form.controls['unity']"
+        type="select">
+        <ion-select  placeholder="select unity">
+         
+          <ion-item *ngFor="let u of unity" value="{{u}}">
+            <ion-select-option>{{u}}</ion-select-option>
+          </ion-item> 
+        </ion-select>
+      </ion-input>
+  </ion-item>
   
 
+  <ion-item  color="primary" button type="submit">
+      <ion-label class="ion-text-center" >Ajouter</ion-label>
+  </ion-item>
+</form>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {FormBuilder, Form, FormGroup} from '@angular/forms';
+import {Validators,FormBuilder, Form, FormGroup} from '@angular/forms';
+
 
 @Component({
   selector: 'app-tab2',
@@ -8,36 +9,50 @@ import {FormBuilder, Form, FormGroup} from '@angular/forms';
 })
 export class Tab2Page {
 
-
-private form: FormGroup;
-private unities = [
-  'litre', 'grammes', "entities"
-]
-
-private unities = {
-  litre: ['ml', 'AfghanB', 'AfghanC'],
-  grammes: ['AzerA', 'AzerB', 'AzerC'],
-  entities: ['AlbaA', 'AlbaB', 'AlbaC'],
-};
-
-private subUnities = {}
-
+  form: FormGroup;
+  unity = [];
+  cent = [];
+ 
+  unities = {
+  "entities" : this.getCentArray(),
+  "liquid"  : ['cl', 'L', 'ml', 'dl', 'galon'],
+  "mass" : ['cg', 'mg', 'g', 'Kg', 'dg']
   
+  }
   constructor(private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
-      name: [''],
-      quantity: [''],
-      super: [''],
-      unity: [''],
+      name: ['', Validators.required],
+      quantity: ['', Validators.required],
+      unity: ['', Validators.required],
       user: ['']
     });
-  }
 
-  onUnityChange(): void {
-    let selectedunity = this.form.get('super').value;
-    this.unities = this.AllsubUnities[selectedunity];
-    console.log(this.subUnities);
     
   }
+
+  
+  getCentArray(){
+    for(let i = 0; i < 100; i++){
+      this.cent.push(i);
+    }
+    return this.cent;
+  }
+  logForm(form){
+    console.log(form.value)
+  }
+
+  segmentChanged(ev: any) {
+    console.log(ev.detail.value);
+    
+    this.unity = [];
+    this.unities[ev.detail.value].forEach(element => {
+      this.unity.push(element);
+    });
+    //this.unity.push(this.unities[ev.detail.value]);
+    
+    console.log(this.unities[ev.detail.value]);
+    
+  }
+  
 
 }
