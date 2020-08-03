@@ -1,17 +1,40 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+    Ajouter une course
     </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content fullscreen>
+<form [formGroup]="form" (ngSubmit)="logForm(form)">
+  
+  <ion-item>
+    <ion-label floating>Nom</ion-label>
+    <ion-input [formControl]="form.controls['name']"
+        type="text"></ion-input>
+  </ion-item>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-item>
+    <ion-label floating>Quantité</ion-label>
+    <ion-input [formControl]="form.controls['quantity']"
+        type="number"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Unity</ion-label>
+    <ion-input [formControl]="form.controls['unity']"
+        type="select">
+        <ion-select>
+          <ion-item *ngFor="let u of unity; index as i" label="{{index[i]}}">
+            <ion-select-option *ngFor="let e of u " value="e">{{e}}</ion-select-option>
+          </ion-item> 
+        </ion-select>
+      </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input>
+      <ion-button ion-button type="submit" block>Ajouter</ion-button>
+    </ion-input>
+  </ion-item>
+</form>
 </ion-content>
