@@ -26,3 +26,17 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+
+
+
+  
+.selectUnity{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  ion-spinner {
+    display: block;
+    margin: auto;
+  }

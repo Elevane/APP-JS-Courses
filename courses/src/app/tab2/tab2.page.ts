@@ -12,6 +12,8 @@ export class Tab2Page {
   form: FormGroup;
   unity = [];
   cent = [];
+  private visible:boolean = false;
+  private loading:boolean=false;
  
   unities = {
   "entities" : this.getCentArray(),
@@ -37,8 +39,9 @@ export class Tab2Page {
     }
     return this.cent;
   }
-  logForm(form){
+  addRessource(form){
     console.log(form.value)
+    this.loading = true;
   }
 
   segmentChanged(ev: any) {
@@ -51,7 +54,18 @@ export class Tab2Page {
     //this.unity.push(this.unities[ev.detail.value]);
     
     console.log(this.unities[ev.detail.value]);
-    
+    if(ev.detail.value == "liquid" || ev.detail.value == "mass"){
+      if(this.visible == false){
+        this.visible = true;
+      }
+     
+    }
+    else if(ev.detail.value== "entities"){
+      if(this.visible == true){
+        this.visible = false;
+      }
+      
+    }
   }
   
 
