@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Validators,FormBuilder, Form, FormGroup} from '@angular/forms';
 import { RessourceService } from '../services/ressource.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -17,12 +18,12 @@ export class Tab2Page {
   private visibleNumber: boolean=false;
  
   unities = {
-  "entities" : this.getCentArray(),
+  "entities" : ['entities'],
   "liquid"  : ['cl', 'L', 'ml', 'dl', 'galon'],
   "mass" : ['cg', 'mg', 'g', 'Kg', 'dg']
   
   }
-  constructor(private formBuilder: FormBuilder, private service : RessourceService) {
+  constructor(private formBuilder: FormBuilder, private service : RessourceService, public alertController: AlertController) {
     this.form = this.formBuilder.group({
       name: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       quantity: ['', Validators.required],
@@ -34,44 +35,53 @@ export class Tab2Page {
   }
 
   
-  getCentArray(){
-    for(let i = 0; i < 100; i++){
-      this.cent.push(i);
-    }
-    return this.cent;
-  }
+
   addRessource(form){
-    console.log(form.value)
-    this.loading = true;
-    this.service.add().subscribe(data =>
-      {
-        
-        this.res = data;
-        for (const key in data) {
-         this.res[key]["validate"] = true;
-         this.res[key]["color"] = 'light';
-        }
-        this.res.sort(function(x, y) { return y.validate - x.validate })
-        
+    
+    
+    let ressource = form.value;
+    console.log(ressource)
+    if( ressource['quantity'] == ''  || ressource['name'] == '' ){
+      if(ressource['name'] == '' ){
+        this.refreshAlert('Erreur','Un nom doit être selectionné');
+      }
+      else if(ressource['quantity'] == '' ){
+        this.refreshAlert('Erreur','Une quantité doit être selectionné');
+      }
+      
+    }
+    else {
+      this.loading = true;
+      if(ressource['unity'] = ''){
+        ressource['unity'] = 'entites';
+      }
+      this.service.add(ressource).subscribe(data => {
+      
+      }, error => {
+        console.log(error);
+        });
+       
        this.loading=false;
-       console.log("qdqzd");
-      },(error)=>{
-       if(error.status == 0){
-         console.log(error);
-         this.error['header'] = "error";
-         this.error['message'] = error.message
-       }
-       this.refreshAlert();
-       this.loading=false;
-      })
+    }
+   
+      
       
      
   }
+  async refreshAlert(header,message) {
+    const alert = await this.alertController.create({
+      cssClass: 'refresh',
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
 
+    await alert.present();
   }
+  
 
-  segmentChanged(ev: any) {
-    console.log(ev.detail.value);
+  segmentChanged(ev: any ) {
+    
     
     this.unity = [];
     this.unities[ev.detail.value].forEach(element => {

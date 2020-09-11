@@ -10,12 +10,12 @@
 
     <ion-item>
       <ion-label floating bold>Nom</ion-label>
-      <ion-input [formControl]="form.controls['name']" type="text"></ion-input>
+      <ion-input [formControl]="form.controls['name']" type="text" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating bold>Quantité</ion-label>
-      <ion-input [formControl]="form.controls['quantity']" type="number"></ion-input>
+      <ion-input [formControl]="form.controls['quantity']" type="number" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Unity</ion-label>
@@ -41,10 +41,7 @@
           </ion-item>
         </ion-select>
     </ion-item>
-    <ion-item  *ngIf="visibleNumber">
-      <ion-input  type="text" slot="end" [formControl]="form.controls['unity']" style="margin-right: 36%;" ion-justify-self-center placeholder="quantité souhaité">
-      </ion-input>
-  </ion-item>
+   
 
 
     <ion-item  (click)="addRessource(form)" color="primary" button>

@@ -34,7 +34,9 @@ export class RessourceService {
   }
 
   add(ressource){
-    return this.http.post(this.url+"")
+
+    
+    return this.http.post(this.url+"ressource", ressource);
   }
   
 
