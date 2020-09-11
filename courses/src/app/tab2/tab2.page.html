@@ -41,6 +41,10 @@
           </ion-item>
         </ion-select>
     </ion-item>
+    <ion-item  *ngIf="visibleNumber">
+      <ion-input  type="text" slot="end" [formControl]="form.controls['unity']" style="margin-right: 36%;" ion-justify-self-center placeholder="quantité souhaité">
+      </ion-input>
+  </ion-item>
 
 
     <ion-item  (click)="addRessource(form)" color="primary" button>

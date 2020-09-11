@@ -32,6 +32,10 @@ export class RessourceService {
   getAll(){
     return this.http.get(this.url+ "ressourceAll");
   }
+
+  add(ressource){
+    return this.http.post(this.url+"")
+  }
   
 
  async delete(id){

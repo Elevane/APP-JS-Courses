@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Validators,FormBuilder, Form, FormGroup} from '@angular/forms';
-
+import { RessourceService } from '../services/ressource.service';
 
 @Component({
   selector: 'app-tab2',
@@ -14,6 +14,7 @@ export class Tab2Page {
   cent = [];
   private visible:boolean = false;
   private loading:boolean=false;
+  private visibleNumber: boolean=false;
  
   unities = {
   "entities" : this.getCentArray(),
@@ -21,9 +22,9 @@ export class Tab2Page {
   "mass" : ['cg', 'mg', 'g', 'Kg', 'dg']
   
   }
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private service : RessourceService) {
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       quantity: ['', Validators.required],
       unity: ['', Validators.required],
       user: ['']
@@ -42,6 +43,31 @@ export class Tab2Page {
   addRessource(form){
     console.log(form.value)
     this.loading = true;
+    this.service.add().subscribe(data =>
+      {
+        
+        this.res = data;
+        for (const key in data) {
+         this.res[key]["validate"] = true;
+         this.res[key]["color"] = 'light';
+        }
+        this.res.sort(function(x, y) { return y.validate - x.validate })
+        
+       this.loading=false;
+       console.log("qdqzd");
+      },(error)=>{
+       if(error.status == 0){
+         console.log(error);
+         this.error['header'] = "error";
+         this.error['message'] = error.message
+       }
+       this.refreshAlert();
+       this.loading=false;
+      })
+      
+     
+  }
+
   }
 
   segmentChanged(ev: any) {
@@ -56,14 +82,17 @@ export class Tab2Page {
     console.log(this.unities[ev.detail.value]);
     if(ev.detail.value == "liquid" || ev.detail.value == "mass"){
       if(this.visible == false){
+        this.visibleNumber=false;
         this.visible = true;
       }
      
     }
     else if(ev.detail.value== "entities"){
-      if(this.visible == true){
+      if(this.visible){
         this.visible = false;
+        this.visibleNumber = true;
       }
+      if(this.visible == false){this.visibleNumber = true;}
       
     }
   }
